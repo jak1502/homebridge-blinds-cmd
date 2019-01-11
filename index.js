@@ -110,7 +110,7 @@ BlindsCMDAccessory.prototype.setTargetPosition = function(pos, callback) {
         const moveUp = ((this.currentTargetPosition != 0) && (this.currentTargetPosition >= lPos));
         this.log((moveUp ? "Moving up" : "Moving down"));
 
-        this.cmdRequest(moveUp, this.moveCMD pos), function(error, stdout, stderr) {
+        this.cmdRequest(moveUp, this.moveCMD, pos), function(error, stdout, stderr) {
           if (error) {
     	    this.log('Move function failed: %s', stderr);
 	    callback(error);
@@ -149,7 +149,7 @@ BlindsCMDAccessory.prototype.lastState = function(callback) {
   }
 }
 
-BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, callback) {
+BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, pos, callback) {
   this.currentPositionState = (moveUp ? Characteristic.PositionState.INCREASING : Characteristic.PositionState.DECREASING);
   this.service
     .setCharacteristic(Characteristic.PositionState, (moveUp ? Characteristic.PositionState.INCREASING : Characteristic.PositionState.DECREASING));
