@@ -1,7 +1,7 @@
 var request = require("request");
 var exec = require("child_process").exec;
 var Service, Characteristic;
-var BlindsCMDDebug = 0;
+var BlindsCMDDebug = 1;
 
 module.exports = function(homebridge) {
     Service = homebridge.hap.Service;
@@ -23,6 +23,7 @@ function BlindsCMDAccessory(log, config) {
     this.name = config["name"];
     this.upCMD = config["up_cmd"];
     this.downCMD = config["down_cmd"];
+    this.moveCMD = config["move_cmd"];
     this.stateCMD = config["state_cmd"];
     this.initialPos = config["intial_position"] || 0 ;
 
@@ -109,12 +110,12 @@ BlindsCMDAccessory.prototype.setTargetPosition = function(pos, callback) {
         const moveUp = ((this.currentTargetPosition != 0) && (this.currentTargetPosition >= lPos));
         this.log((moveUp ? "Moving up" : "Moving down"));
 
-        this.cmdRequest(moveUp, this.moveCMD, pos), function(error, stdout, stderr) {
+        this.cmdRequest(moveUp, (moveUp ? this.upCMD : this.downCMD), function(error, stdout, stderr) {
           if (error) {
     	    this.log('Move function failed: %s', stderr);
 	    callback(error);
           } else {
-      	    this.log("Success moving %s", (moveUp ? "up (to 100)" : "down (to 0)"))
+      	    this.log("Success moving to %s", pos)
 
 	    this.lastPosition = (moveUp ? 100 : 0);
 
@@ -148,7 +149,7 @@ BlindsCMDAccessory.prototype.lastState = function(callback) {
   }
 }
 
-BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, pos, callback) {
+BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, callback) {
   this.currentPositionState = (moveUp ? Characteristic.PositionState.INCREASING : Characteristic.PositionState.DECREASING);
   this.service
     .setCharacteristic(Characteristic.PositionState, (moveUp ? Characteristic.PositionState.INCREASING : Characteristic.PositionState.DECREASING));
