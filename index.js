@@ -154,7 +154,7 @@ BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, pos, callback) {
   this.service
     .setCharacteristic(Characteristic.PositionState, (moveUp ? Characteristic.PositionState.INCREASING : Characteristic.PositionState.DECREASING));
 
-  exec(cmd + ' ' + this.gpioPIN + ' ' + pos/10, function(error, stdout, stderr) {
+  exec(cmd + ' ' + this.gpioPIN + ' ' + pos, function(error, stdout, stderr) {
     callback(error, stdout, stderr)
   });
 }
