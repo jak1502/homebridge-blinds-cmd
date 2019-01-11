@@ -24,7 +24,7 @@ function BlindsCMDAccessory(log, config) {
     this.upCMD = config["up_cmd"];
     this.downCMD = config["down_cmd"];
     this.stateCMD = config["state_cmd"];
-    this.initialPos = config["intial_position"] || 0
+    this.initialPos = config["intial_position"] || 0 ;
 
     // state vars
     this.lastPosition = this.initialPos; // last known position of the blinds, down by default
