@@ -118,7 +118,7 @@ BlindsCMDAccessory.prototype.setTargetPosition = function(pos, callback) {
           } else {
       	    this.log("Success moving to %s", pos)
 
-	    this.lastPosition = (moveUp ? 100 : 0);
+	    this.lastPosition = pos;
 
 	    // set our current position and set our position to stopped.
             this.service
