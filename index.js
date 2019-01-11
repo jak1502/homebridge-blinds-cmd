@@ -21,7 +21,8 @@ function BlindsCMDAccessory(log, config) {
 
     // configuration vars
     this.name = config["name"];
-    this.upCMD = config["up_cmd"];
+    this.servoMAX = config["servo_max"];
+    this.servoMIN = config["servo_min"];
     this.gpioPIN = config["gpio_pin"];
     this.moveCMD = config["move_cmd"];
     this.stateCMD = config["state_cmd"];
@@ -154,7 +155,7 @@ BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, pos, callback) {
   this.service
     .setCharacteristic(Characteristic.PositionState, (moveUp ? Characteristic.PositionState.INCREASING : Characteristic.PositionState.DECREASING));
 
-  exec(cmd + ' ' + this.gpioPIN + ' ' + pos, function(error, stdout, stderr) {
+  exec(cmd + ' ' + this.gpioPIN + ' ' + pos + ' ' + this.servoMIN + ' ' + this.servoMAX, function(error, stdout, stderr) {
     callback(error, stdout, stderr)
   });
 }
