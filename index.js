@@ -154,7 +154,7 @@ BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, pos, callback) {
   this.service
     .setCharacteristic(Characteristic.PositionState, (moveUp ? Characteristic.PositionState.INCREASING : Characteristic.PositionState.DECREASING));
 
-  exec(cmd + pos, function(error, stdout, stderr) {
+  exec(cmd + ' ' + pos, function(error, stdout, stderr) {
     callback(error, stdout, stderr)
   });
 }
