@@ -1,7 +1,7 @@
 var request = require("request");
 var exec = require("child_process").exec;
 var Service, Characteristic;
-var BlindsCMDDebug = 1;
+var BlindsCMDDebug = 0;
 
 module.exports = function(homebridge) {
     Service = homebridge.hap.Service;
@@ -23,7 +23,6 @@ function BlindsCMDAccessory(log, config) {
     this.name = config["name"];
     this.upCMD = config["up_cmd"];
     this.downCMD = config["down_cmd"];
-    this.moveCMD = config["move_cmd"];
     this.stateCMD = config["state_cmd"];
     this.initialPos = config["intial_position"] || 0 ;
 
