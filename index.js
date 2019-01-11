@@ -110,7 +110,7 @@ BlindsCMDAccessory.prototype.setTargetPosition = function(pos, callback) {
         const moveUp = ((this.currentTargetPosition != 0) && (this.currentTargetPosition >= lPos));
         this.log((moveUp ? "Moving up" : "Moving down"));
 
-        this.cmdRequest(moveUp, (moveUp ? this.upCMD : this.downCMD), function(error, stdout, stderr) {
+        this.cmdRequest(moveUp, this.moveCMD pos), function(error, stdout, stderr) {
           if (error) {
     	    this.log('Move function failed: %s', stderr);
 	    callback(error);
