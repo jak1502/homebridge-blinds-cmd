@@ -24,11 +24,12 @@ function BlindsCMDAccessory(log, config) {
     this.upCMD = config["up_cmd"];
     this.downCMD = config["down_cmd"];
     this.stateCMD = config["state_cmd"];
+    this.initialPos = config["intial_position"] || 0
 
     // state vars
-    this.lastPosition = 0; // last known position of the blinds, down by default
+    this.lastPosition = this.initialPos; // last known position of the blinds, down by default
     this.currentPositionState = Characteristic.PositionState.STOPPED; // stopped by default
-    this.currentTargetPosition = 0; // down by default
+    this.currentTargetPosition = this.initialPos; // down by default
 
     // register the service and provide the functions
     this.service = new Service.WindowCovering(this.name);
@@ -159,11 +160,11 @@ BlindsCMDAccessory.prototype.cmdRequest = function(moveUp, cmd, callback) {
 
 BlindsCMDAccessory.prototype.getServices = function() {
   var informationService = new Service.AccessoryInformation();
-  
+
   informationService
     .setCharacteristic(Characteristic.Manufacturer, this.manufacturer)
     .setCharacteristic(Characteristic.Model, this.model)
     .setCharacteristic(Characteristic.SerialNumber, this.serial);
-   
+
   return [this.service, informationService];
 }
